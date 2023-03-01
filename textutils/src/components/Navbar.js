@@ -26,9 +26,17 @@ export default function Navbar(props ) {
         <button className="btn btn-primary" type="submit">Search</button>
         </form>
      
-        <div className={`form-check form-switch mx-5 text-${props.mode === "dark"? "light":"dark"}`}>
-            <input className="form-check-input" onClick={props.handleMode}  type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" >dark mode enable</label>
+        <div className={`form-check form-switch mx-3 text-${props.mode === "dark"? "light":"dark"}`}>
+            <input className="form-check-input" onClick={props.handleToggle}  type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" >{props.mode === "dark"? "Disable":"Enable"} Dark Mode </label>
+        </div>
+        <div className={`form-check form-switch mx-3 text-${props.mode === "dark"? "light":"dark"}`}>
+            <input className="form-check-input" onClick={props.handleToggleGreen}  type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" >{props.mode === "dark"? "Disable":"Enable"} Green Mode </label>
+        </div>
+        <div className={`form-check form-switch mx-3 text-${props.mode === "dark"? "light":"dark"}`}>
+            <input className="form-check-input" onClick={props.handleTogglePink}  type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+            <label className="form-check-label" htmlFor="flexSwitchCheckDefault" >{props.mode === "dark"? "Disable":"Enable"} Pink Mode </label>
         </div>
     </div>
     </div>

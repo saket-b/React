@@ -5,6 +5,7 @@ export default function TextForm(props) {
         
         let textnew = text.toUpperCase();
         setText(textnew);
+        props.handleAlert("Converted to UpperCase!", "success");
 
     }
     
@@ -12,6 +13,7 @@ export default function TextForm(props) {
      
         let textnew = text.toLowerCase();
         setText(textnew);
+        props.handleAlert("Converted to LowwerCase!", "success");
 
     }
     const handleChange = (event)=>{
@@ -21,14 +23,18 @@ export default function TextForm(props) {
     const handleClear = () =>{
         let newtext ="";
         setText(newtext);
+        props.handleAlert("Text to be Clear!", "success");
+
     }
 
     const handleExtraspace = ()=>{
 
-        console.log("inside handle extra space");
+        // console.log("inside handle extra space");
         let textnew = text.split(/[ ]+/);
         // console.log(textnew);
         setText(textnew.join(" "));
+        props.handleAlert("Extra Space Removed!", "success");
+
     }
     const handleCopyText = async()=>{
 
@@ -37,7 +43,29 @@ export default function TextForm(props) {
         //document.execCommand("copy");
         //console.log(textnew);
         await navigator.clipboard.writeText(textnew.value);
+        props.handleAlert("Clipboard copy!", "success");
 
+
+    }
+    const countWord = (text)=>{
+        let newtext = text.split(" ");
+        let count =0;
+        // console.log(newtext);
+        for(let i=0; i<newtext.length; i++)
+        {  
+            if(newtext[i] !== '')
+                count++;
+        }
+        return count;
+    }
+    const countLetter = (text)=>{
+         let length =0;
+        
+         for(let i=0 ; i<text.length; i++)
+         if(text[i] !== ' ')
+            length++;
+         return length;
+        // return 0;
     }
 
 
@@ -58,10 +86,10 @@ const [text, setText]= useState("");
             <button className="btn btn-primary mx-2" onClick={handleCopyText} id="myBox" >Copy Text</button>
             <button className="btn btn-primary mx-2" onClick={handleExtraspace} >Remove ExtraSpace</button>
         </div>
-        <div className='conatainer my-3 mx  -2' style={{color : props.mode === "light" ?"black":"white"}}>
+        <div className='container my-3 mx  -2' style={{color : props.mode === "light" ?"black":"white"}}>
             <h1 >Text Summary</h1>
-            <p > <b>{text.split(" ").length}</b> Total Words  <b>{text.length}</b> Total letters  </p>
-            <p>Read in <b>{0.008 * text.split(" ").length}</b> minutes</p>
+            <p > <b>{countWord(text)}</b> Total Words  <b>{countLetter(text)}</b> Total letters  </p>
+            <p>Read in <b>{0.008 * countWord(text)}</b> minutes</p>
             <h2>Preview </h2>
             <p> {text.length === 0 ? "Enter Something in text": text}</p>
         </div>
