@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/React/textutils/static/css/main.2543b9d3.css",
-    "main.js": "/React/textutils/static/js/main.9cb20540.js",
-    "static/js/787.719ec76d.chunk.js": "/React/textutils/static/js/787.719ec76d.chunk.js",
-    "index.html": "/React/textutils/index.html",
-    "main.2543b9d3.css.map": "/React/textutils/static/css/main.2543b9d3.css.map",
-    "main.9cb20540.js.map": "/React/textutils/static/js/main.9cb20540.js.map",
-    "787.719ec76d.chunk.js.map": "/React/textutils/static/js/787.719ec76d.chunk.js.map"
+    "main.css": "/saket-b/TextUtils/static/css/main.2543b9d3.css",
+    "main.js": "/saket-b/TextUtils/static/js/main.4d4d4730.js",
+    "static/js/787.719ec76d.chunk.js": "/saket-b/TextUtils/static/js/787.719ec76d.chunk.js",
+    "index.html": "/saket-b/TextUtils/index.html",
+    "main.2543b9d3.css.map": "/saket-b/TextUtils/static/css/main.2543b9d3.css.map",
+    "main.4d4d4730.js.map": "/saket-b/TextUtils/static/js/main.4d4d4730.js.map",
+    "787.719ec76d.chunk.js.map": "/saket-b/TextUtils/static/js/787.719ec76d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2543b9d3.css",
-    "static/js/main.9cb20540.js"
+    "static/js/main.4d4d4730.js"
   ]
 }
