@@ -6,7 +6,11 @@ import TextForm from './components/TextForm';
 import React, { useState} from 'react'
 import Alert from './components/Alert';
 
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -93,16 +97,28 @@ else if(mode === 'pink')
   return (
    
     <>
-    <Navbar   title = "TextUtils"  aboutText = "About" mode = {mode} handleToggle = {handleToggle} handleToggleGreen ={handleToggleGreen} 
+    {/* <Router> */}
+      <Navbar   title = "TextUtils"  aboutText = "About" mode = {mode} handleToggle = {handleToggle} handleToggleGreen ={handleToggleGreen} 
           handleTogglePink = {handleTogglePink}/>
-    <Alert alert = {alert}/>
-    <div className="container my-3"> 
-        <TextForm  heading = "Enter The Text to Analyze " mode ={mode} handleAlert = {handleAlert} />
-        {/* <About/> */}
-       
-    </div>
+     <Alert alert = {alert}/>
+ 
+      <div className="container my-3">
+    
+              {/* <About />  */}
+               <TextForm  heading = "Enter The Text to Analyze " mode ={mode} handleAlert = {handleAlert} />
+            {/* <Routes> */}
+              {/* if not write exact similar type path can render */}
+              {/* <Route exact path="/about" element= {<About />}/>
+              <Route exact path="/" element = {<TextForm  heading = "Enter The Text to Analyze " mode ={mode} handleAlert = {handleAlert} />}
+              />
+
+            </Routes> */}
         
-   
+      </div>
+      
+    {/* </Router> */}
+      
+
     </>
    
     
