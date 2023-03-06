@@ -17,8 +17,19 @@ function App() {
   const [alert, setAlert] = useState(null);
 
 
-  const handleToggle = ()=>{
+  const removeClassColor =()=>{
+
+    document.body.classList.remove('bg-light');
+    document.body.classList.remove('bg-primary');
+    document.body.classList.remove('bg-warning');
+    document.body.classList.remove('bg-success');
+
+  }
+  const handleToggle = (cls)=>{
+
+        removeClassColor();
        // console.log("indide toggle");
+      // document.body.classList.add('bg-'+cls);
     if( mode === 'light')
     {
       setMode("dark");
@@ -48,39 +59,6 @@ function App() {
   }
 
 
-  const handleToggleGreen = ()=>{
-    // console.log("indide toggle");
- if( mode === 'light')
- {
-   setMode("green");
-   document.body.style.background = "#03723f";
-   handleAlert("Green Mode Enable", "success");
- }
- else if(mode === 'green')
- {
-   setMode("light");
-   document.body.style.background = "white";
-   handleAlert("Light Mode Enable", "success");
- }
-}
-
-
-const handleTogglePink= ()=>{
-  // console.log("indide toggle");
-if( mode === 'light')
-{
- setMode("pink");
- document.body.style.background = "#d63384";
- handleAlert("Pink Mode Enable", "success");
-}
-else if(mode === 'pink')
-{
- setMode("light");
- document.body.style.background = "white";
- handleAlert("Light Mode Enable", "success");
-}
-}
-
   const handleAlert =(message, type)=>{
 
     setAlert({
@@ -97,26 +75,26 @@ else if(mode === 'pink')
   return (
    
     <>
-    {/* <Router> */}
-      <Navbar   title = "TextUtils"  aboutText = "About" mode = {mode} handleToggle = {handleToggle} handleToggleGreen ={handleToggleGreen} 
-          handleTogglePink = {handleTogglePink}/>
+    <Router>
+      <Navbar   title = "TextUtils"  aboutText = "About" mode = {mode} handleToggle = {handleToggle}
+         />
      <Alert alert = {alert}/>
  
       <div className="container my-3">
     
               {/* <About />  */}
-               <TextForm  heading = "Enter The Text to Analyze " mode ={mode} handleAlert = {handleAlert} />
-            {/* <Routes> */}
-              {/* if not write exact similar type path can render */}
-              {/* <Route exact path="/about" element= {<About />}/>
-              <Route exact path="/" element = {<TextForm  heading = "Enter The Text to Analyze " mode ={mode} handleAlert = {handleAlert} />}
+               {/* <TextForm  heading = "Enter The Text to Analyze " mode ={mode} handleAlert = {handleAlert} /> */}
+            <Routes>
+              if not write exact similar type path can render
+               <Route exact path="/about" element= {<About    mode = {mode}/>}/>
+              <Route path="/" element = {<TextForm  heading = "TextUtils - Word Counter | Charater Counter " mode ={mode} handleAlert = {handleAlert} />}
               />
 
-            </Routes> */}
+            </Routes> 
         
       </div>
       
-    {/* </Router> */}
+    </Router>
       
 
     </>

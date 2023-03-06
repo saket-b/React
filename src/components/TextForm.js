@@ -48,24 +48,15 @@ export default function TextForm(props) {
 
     }
     const countWord = (text)=>{
-        let newtext = text.split(" ");
-        let count =0;
-        // console.log(newtext);
-        for(let i=0; i<newtext.length; i++)
-        {  
-            if(newtext[i] !== '')
-                count++;
-        }
-        return count;
+        return text.split(/\s+/).filter((element)=>{
+            return element.length !== 0;
+        }).length;
     }
     const countLetter = (text)=>{
-         let length =0;
         
-         for(let i=0 ; i<text.length; i++)
-         if(text[i] !== ' ')
-            length++;
-         return length;
-        // return 0;
+        
+       return text.length;
+       // return 0;
     }
 
 
@@ -74,17 +65,17 @@ const [text, setText]= useState("");
     <>
         <div className='container' style={{color : props.mode === "light" ?"black":"white"}}>
 
-            <h1 >{props.heading}</h1>
+            <h1 className='mb-3'>{props.heading}</h1>
             <div className="mb-3">
                 <textarea className="form-control" id="myBox" rows="8" onChange={handleChange} value={text}
                 style={{backgroundColor : props.mode === "light" ?"white":"grey",color : props.mode === "light" ?"black":"white"}}
                 > </textarea>
             </div> 
-            <button className="btn btn-primary mx-2" onClick={handleUpClick} >Convert to UpperCase</button>
-            <button className="btn btn-primary mx-2" onClick={handleLoClick} >Convert to lowerCase</button>
-            <button className="btn btn-primary mx-2" onClick={handleClear} >Clear Text</button>
-            <button className="btn btn-primary mx-2" onClick={handleCopyText} id="myBox" >Copy Text</button>
-            <button className="btn btn-primary mx-2" onClick={handleExtraspace} >Remove ExtraSpace</button>
+            <button className="btn btn-primary mx-2 my-2" disabled= {text.length === 0} onClick={handleUpClick} >Convert to UpperCase</button>
+            <button className="btn btn-primary mx-2 my-2" disabled= {text.length === 0} onClick={handleLoClick} >Convert to lowerCase</button>
+            <button className="btn btn-primary mx-2 my-2" disabled= {text.length === 0} onClick={handleClear} >Clear Text</button>
+            <button className="btn btn-primary mx-2 my-2" disabled= {text.length === 0} onClick={handleCopyText} id="myBox" >Copy Text</button>
+            <button className="btn btn-primary mx-2 my-2" disabled= {text.length === 0} onClick={handleExtraspace} >Remove ExtraSpace</button>
         </div>
         <div className='container my-3 mx  -2' style={{color : props.mode === "light" ?"black":"white"}}>
             <h1 >Text Summary</h1>

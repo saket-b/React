@@ -1,36 +1,19 @@
 import React, {useState} from 'react'
 
-export default function About() {
+export default function About(props) {
   
   
-    const [textStyle, setStyle] = useState({
-            color:"black",
-            backgroundColor :'white'
-    });
+    let textStyle ={
+            color: props.mode === 'light' ? "black": "white",
+            backgroundColor : props.mode === 'light' ? "white": "#0f4699"
+    };
+
+   
 
     const [toggleBtn , setBtn] = useState("Dark Mode Enable");
 
-   const toggleStyle = ()=>{
-
-        if( textStyle.color === 'black')
-        {
-            setStyle({
-                color:"white",
-                backgroundColor :'black'
-        });
-            setBtn("Dark Mode Disable")
-        }
-        else 
-        { 
-            setStyle({
-                color:"black",
-                backgroundcolor :'white'
-        });
-        setBtn("Dark Mode Enable")
-
-        }
-        
-    }
+   
+   
 
 
   
@@ -38,8 +21,7 @@ export default function About() {
 return (
 
     <>
-    
-    <div className='conatainer ' style={textStyle} >
+    <div className='conatainer ' style={{color: props.mode === 'light' ? "black": "white"}}   >
     <h1 className='my-3'>About Us</h1>
         <div className="accordion" id="accordionExample">
   <div className="accordion-item">
@@ -70,7 +52,7 @@ return (
     </div>
   </div>
 
-  <div className="accordion-item">
+  <div className="accordion-item" >
     <h2 className="accordion-header" id="headingThree">
       <button className="accordion-button collapsed"  style={textStyle} type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
       Why is it different?
