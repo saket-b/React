@@ -7,7 +7,7 @@ const fetchUser = require("../middleware/fetchuser");
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'sk@wt123'
 
-// Route 1: create user using post request "/api/user/createUser"
+// Route 1: create user using post request "/api/user/createUser" No loginrequired
 
 authRouter.post('/createUser', [
 
@@ -26,7 +26,7 @@ authRouter.post('/createUser', [
   try {
     // check user is exist or not
     let user = await userModel.findOne({ "email": req.body.email });
-    console.log(user);
+    // console.log(user);
     if ( user ) {
       // this is for create new user
       return res.status(400).json({ "message": "user already exist" });
@@ -55,7 +55,7 @@ authRouter.post('/createUser', [
 
 
 // this is route for login
-// Route 2: login user using post request "/api/user/login"
+// Route 2: login user using post request "/api/user/login"  for login user 
 authRouter.post('/login', [
 
   body('email', "Enter valid email").isEmail(),
@@ -99,12 +99,15 @@ authRouter.post('/login', [
 
 
 })
-
-// Route 2: login user using post request "/api/user/login"
+ 
+// Route 3:  "/api/user/getUser" login is required
+// This route  Get logedin user Detail 
+// Like How many notes having this user.
 authRouter.post("/getuser", fetchUser, async (req, res)=>{
 
   try {
   
+    // id come from fetchUser middle ware fun (in this function having token which token gibe user id)
     let id = req.user.id;
     console.log("id =", id);
     let user = await userModel.findById(id);
