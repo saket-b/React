@@ -69,7 +69,8 @@ authRouter.post('/login', [
   }
 
   let {email, password} = req.body;
-  console.log("email ", email);
+  let success = true;
+  // console.log("email ", email);
   try {
 
     let user = await userModel.findOne({"email": email});
@@ -83,14 +84,18 @@ authRouter.post('/login', [
             id:user.id
           }
           let jwtToken = jwt.sign(data, JWT_SECRET);
-          res.json({ "success": jwtToken});
+          res.json({"success": success,"token": jwtToken});
         }
         else 
-        res.status(400).json({message:"Credential Error"});
+        {
+          success = false;
+          res.status(400).json({success ,message:"Credential Error"});
+        }
     }
     else 
     {
-      res.status(400).json({message:"User is not found"});
+      success = false;
+      res.status(400).json(success, {message:"Credential Error"});
     }
     
   } catch (error) {
