@@ -22,10 +22,10 @@ const NoteState = (props) => {
                     "Content-Type": "application/json",
                     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
                 },
-                body: JSON.stringify(), // body data type must match "Content-Type" header
+                // body: JSON.stringify(), // body data type must match "Content-Type" header
             });
             let json = await response.json(); // parses JSON response into native JavaScript objects
-            //  console.log(json);
+            //console.log("message = ", json.message);
             setNotes(json.message);
 
     }
@@ -45,17 +45,11 @@ const NoteState = (props) => {
         });
       
         console.log("=============");
-        let note = {
-            "_id": "642329b0e2ec692b87929e634addf",// this id by default use not neccessary
-            "user": "642017497533af55aa9592d7",// user id is also not nesseccary
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "__v": 0
-        }
-        // console.log("inside note add");
-        // console.log(note);
-         setNotes(notes.concat(note))
+        let note = await response.json();
+        console.log("inside note add ", note);
+       
+         setNotes(notes.concat(note.success));
+         console.log( "Notes = ", notes);
     }
 
     // delete Note function
@@ -97,8 +91,9 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({title,description, tag}), // body data type must match "Content-Type" header
           });
-          console.log(await response.json());
+        //   console.log(await response.json());
           let newnotes = JSON.parse(JSON.stringify(notes));
+          
         for (let index = 0; index < newnotes.length; index++) {
             let element = newnotes[index];
             if (element._id === id) {

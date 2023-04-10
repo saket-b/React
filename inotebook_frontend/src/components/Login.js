@@ -1,0 +1,65 @@
+import React, { useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+
+const Login = () => {
+
+    const [credential, setcredential] = useState({"email":"", "password":""});
+
+    const navigate = useNavigate();
+    const handleLogin = async (e) =>{
+        e.preventDefault();
+        
+        console.log("email = ", credential.email);
+        const response = await fetch( 'http://localhost:5000/api/auth/login', {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                "Content-Type": "application/json",
+                // "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
+            },
+            body: JSON.stringify({email:credential.email, password:credential.password}), // body data type must match "Content-Type" header
+        });
+
+        let json = await response.json();
+        // console.log("data = ", json);
+        // console.log(json.success);
+        if(json.success)
+        {
+            localStorage.setItem("token",json.token);
+            navigate('/');
+        }
+        else 
+        {
+            alert("Invalid credentials")
+        }
+    }
+
+    const handleOnchange = (e) => {
+        
+      //  console.log("email = ", credential.email);
+        setcredential({ ...credential, [e.target.name]: e.target.value });
+    
+      }
+    
+
+    
+
+    return (
+        <div>
+            <form onSubmit={handleLogin}>
+                <div className="mb-3">
+                    <label forhtml="email" className="form-label">Email address</label>
+                    <input type="email" className="form-control" onChange={handleOnchange} id="email"  name = "email" />
+                </div>
+                <div className="mb-3">
+                    <label forhtml="password" className="form-label">Password</label>
+                    <input type="password" className="form-control"  onChange={handleOnchange} id="password" name = "password"/>
+                </div>
+               
+                <button type="submit" className="btn btn-primary"  >Login</button>
+            </form>
+
+        </div>
+    )
+}
+
+export default Login

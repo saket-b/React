@@ -11,7 +11,6 @@ const Notes = () => {
   // let inputref = useRef(null);
   const context = useContext(noteContext)
   const { notes, getAllNotes, editNote } = context;
- 
 
   const [note, setNotes] = useState({ "title": "", "description": "", "tag": "" });
 
@@ -21,6 +20,7 @@ const Notes = () => {
     // eslint-disable-next-line
   }, []);
 
+  console.log("notes =", notes);
 
   const UpdateNote = (currentnote) => {
     setShow(true);
@@ -30,13 +30,13 @@ const Notes = () => {
     e.preventDefault();
     console.log(note);
     editNote(note._id, note.title, note.description, note.tag);
-  
+
     document.getElementById("myForm").reset();
     handleClose();
   }
 
   const handleOnchange = (e) => {
-    
+
     setNotes({ ...note, [e.target.name]: e.target.value });
 
   }
@@ -65,13 +65,12 @@ const Notes = () => {
         <form className='my-3' id="myForm">
           <div className="form-group my-3 mx-3">
             <label htmlFor="exampleInputEmail1">Title</label>
-            <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" value={note.title} placeholder="title"
-              onChange={handleOnchange} />
+            <input type="text" className="form-control" id="title" name="title" aria-describedby="emailHelp" minLength={5} required value={note.title} placeholder="title" onChange={handleOnchange} />
             {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
           </div>
           <div className="form-group my-3 mx-3">
             <label htmlFor="exampleInputPassword1">Description</label>
-            <input type="text" className="form-control" id="description" name="description" placeholder="description" value={note.description}  onChange={handleOnchange} />
+            <input type="text" className="form-control" id="description" name="description" placeholder="description" minLength={5} required value={note.description} onChange={handleOnchange} />
           </div>
           <div className="form-group my-3 mx-3">
             <label htmlFor="exampleInputPassword1">Tag</label>
@@ -84,7 +83,7 @@ const Notes = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleUpdate}>
+          <Button variant="primary" disabled={note.title.length < 5 || note.description.length < 5} onClick={handleUpdate}>
             Update Note
           </Button>
         </Modal.Footer>
@@ -92,14 +91,17 @@ const Notes = () => {
 
       <div className='row my-3'>
         <h2>Your Notes</h2>
-        {notes.map((note, id) => {
-          return <NoteItems key={id} note={note} UpdateNote={UpdateNote} />
-        })
-        }
+          <div className="container mx-3">
+            {notes.length === 0 && 'No Notes available'}
+          </div>
+          {notes.map((note, id) => {
+            return <NoteItems key={id} note={note} UpdateNote={UpdateNote} />
+          })
+          }
 
-      </div>
-    </>
-  )
+        </div>
+      </>
+      )
 }
 
-export default Notes
+      export default Notes
