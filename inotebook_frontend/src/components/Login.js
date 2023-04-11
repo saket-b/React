@@ -1,9 +1,13 @@
-import React, { useState} from 'react'
+import React, { useContext, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import alertContext from '../context/Notes/alertContext';
 const Login = () => {
 
     const [credential, setcredential] = useState({"email":"", "password":""});
+    
+    const alertcontext = useContext(alertContext);
+    const {handleAlert} = alertcontext;
+
 
     const navigate = useNavigate();
     const handleLogin = async (e) =>{
@@ -26,14 +30,16 @@ const Login = () => {
         {
             localStorage.setItem("token",json.token);
             navigate('/');
+            handleAlert("login successfully", "success");
         }
         else 
         {
+            handleAlert("credential Error", "warning");
             alert("Invalid credentials")
         }
     }
 
-    const handleOnchange = (e) => {
+    const handleonchange = (e) => {
         
       //  console.log("email = ", credential.email);
         setcredential({ ...credential, [e.target.name]: e.target.value });
@@ -48,11 +54,11 @@ const Login = () => {
             <form onSubmit={handleLogin}>
                 <div className="mb-3">
                     <label forhtml="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" onChange={handleOnchange} id="email"  name = "email" />
+                    <input type="email" className="form-control" onChange={handleonchange} id="email"  name = "email" />
                 </div>
                 <div className="mb-3">
                     <label forhtml="password" className="form-label">Password</label>
-                    <input type="password" className="form-control"  onChange={handleOnchange} id="password" name = "password"/>
+                    <input type="password" className="form-control"  onChange={handleonchange} id="password" name = "password"/>
                 </div>
                
                 <button type="submit" className="btn btn-primary"  >Login</button>

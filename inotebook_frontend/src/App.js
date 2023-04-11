@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -14,16 +14,24 @@ import NoteState from './context/Notes/NoteState';
 import Alert from './components/Alert';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import AlertState from './context/Notes/AlertState';
+import alertContext from './context/Notes/alertContext';
 
 function App() {
+
+//  const context = useContext(alertContext);
+//  const {alert} = context;
+
   return (
 
     <React.StrictMode>
+      <AlertState>
       <NoteState>
+        
         <Router>
           <Navbar />
-          
-          <div className="container">
+          <Alert />
+          <div className="container my-3">
             <Routes>
               <Route exact path='/' element={< Home />}></Route>
               <Route exact path='/about' element={< About />}></Route>
@@ -33,6 +41,7 @@ function App() {
           </div>
         </Router>
       </NoteState>
+      </AlertState>
     </React.StrictMode>
   );
 }
