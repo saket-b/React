@@ -18,8 +18,10 @@ authRouter.post('/createUser', [
 ], async (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
   const errors = validationResult(req);
+  let success = true;
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    success = false;
+    return res.status(400).json({ "success":success, errors: errors.array() });
   }
 
 
@@ -29,7 +31,8 @@ authRouter.post('/createUser', [
     // console.log(user);
     if ( user ) {
       // this is for create new user
-      return res.status(400).json({ "message": "user already exist" });
+      success = false;
+      return res.status(400).json({"success":success, "message": "user already exist" });
       
     }
     let salt = bcrypt.genSaltSync(10);
@@ -40,15 +43,22 @@ authRouter.post('/createUser', [
       email: req.body.email,
     })
 
+    
     let data = {
-      user : req.body
+      id : user.id
     }
+
+    console.log(" id = ", user.id);
+    console.log(" body = ", data);
+
     let jwtToken = jwt.sign(data, JWT_SECRET);
-    res.json({ "success": jwtToken});
+
+    res.json({"success":success, "token": jwtToken});
   }
   catch (err) {
     // for catch error
-    res.status(400).json({ "Error": err.message });
+    success = false;
+    res.status(400).json({ "success": success, "Error": err.message });
   }
 
 })
@@ -113,7 +123,7 @@ authRouter.post("/getuser", fetchUser, async (req, res)=>{
   try {
   
     // id come from fetchUser middle ware fun (in this function having token which token gibe user id)
-    let id = req.user.id;
+    let id = req.user;
     console.log("id =", id);
     let user = await userModel.findById(id);
     console.log(user);

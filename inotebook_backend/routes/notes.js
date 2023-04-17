@@ -9,9 +9,9 @@ notesRouter.get('/getAllNotes', fetchUser, async (req, res) => {
   try {
     // give the allnote with the help of user.id(which is come from fetUser middleware function)
 
-    const AllNotes = await notesModel.find({ user: req.user.id });
-    console.log("Notes =", AllNotes);
-    res.json({ message: AllNotes });
+    const AllNotes = await notesModel.find({ user: req.user });
+   // console.log("Notes =", AllNotes);
+    res.json({ "allnotes": AllNotes });
 
   } catch (error) {
     res.json({ "Message": error.message });
@@ -41,11 +41,11 @@ notesRouter.post('/addNote', fetchUser, [
 
     let note = new notesModel({
       title, description, tag,
-      user: req.user.id
+      user: req.user
     });
-    console.log("hello2");
+    //console.log("hello2 = ", req.user);
     const noteCreated = await note.save();
-    res.json({ "success": noteCreated });
+    res.json({ "addnote": noteCreated });
 
   } catch (error) {
 
@@ -67,8 +67,9 @@ notesRouter.patch("/updateNote/:id", fetchUser, async (req, res) => {
     if (description) { New_note.description = description };
     if (tag) { New_note.tag = tag };
     let Note = await notesModel.findById(req.params.id);
+    
 
-    if (Note.user.toString() !== req.user.id) {
+    if (Note.user.toString() !== req.user) {
       return res.status(401).json({ "Message": "User Not Found" })
     }
 
@@ -92,12 +93,12 @@ notesRouter.delete("/deleteNote/:id", fetchUser, async (req, res) => {
    
     let Note = await notesModel.findById(req.params.id);
 
-    if (Note.user.toString() !== req.user.id) {
+    if (Note.user.toString() !== req.user) {
       return res.status(401).json({ "Message": "User Not Found" })
     }
 
     Note = await notesModel.findByIdAndDelete(req.params.id)
-    res.json({ "Delete": Note });
+    res.json({ "deleted": Note });
 
   } catch (error) {
 
