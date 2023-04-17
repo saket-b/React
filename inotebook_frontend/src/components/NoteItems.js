@@ -10,7 +10,7 @@ const NoteItems = (props) => {
 
     const handleDelete =()=>{
         
-        console.log("click on deletehandle");
+        
         let id = props.note._id;
         deleteNote(id);
     }

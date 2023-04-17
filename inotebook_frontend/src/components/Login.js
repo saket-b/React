@@ -13,7 +13,7 @@ const Login = () => {
     const handleLogin = async (e) =>{
         e.preventDefault();
         
-        console.log("email = ", credential.email);
+       
         const response = await fetch( 'http://localhost:5000/api/auth/login', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -24,11 +24,9 @@ const Login = () => {
         });
 
         let json = await response.json();
-        // console.log("data = ", json);
-        // console.log(json.success);
         if(json.success)
         {
-            localStorage.setItem("token",json.token);
+            localStorage.setItem('token',json.token);
             navigate('/');
             handleAlert("login successfully", "success");
         }
@@ -51,8 +49,9 @@ const Login = () => {
 
     return (
         <div>
+            <h2 className='my-3'>Login to use iNoteBook</h2>
             <form onSubmit={handleLogin}>
-                <div className="mb-3">
+                <div className="my-3">
                     <label forhtml="email" className="form-label">Email address</label>
                     <input type="email" className="form-control" onChange={handleonchange} id="email"  name = "email" />
                 </div>
@@ -60,6 +59,7 @@ const Login = () => {
                     <label forhtml="password" className="form-label">Password</label>
                     <input type="password" className="form-control"  onChange={handleonchange} id="password" name = "password"/>
                 </div>
+               
                
                 <button type="submit" className="btn btn-primary"  >Login</button>
             </form>

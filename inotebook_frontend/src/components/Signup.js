@@ -11,7 +11,7 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
        
-        console.log("email = ", credential.email);
+       
         const response = await fetch('http://localhost:5000/api/auth/createUser', {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
@@ -22,12 +22,11 @@ const Signup = () => {
         });
 
         let json = await response.json();
-        //  console.log("data = ", json);
-        // console.log(json.success);
+        
         if (json.success) {
             localStorage.setItem("token", json.token);
-            navigate('/');
             handleAlert("signup successfully", "success");
+            navigate('/');
 
         }
         else {
@@ -38,7 +37,7 @@ const Signup = () => {
 
     const handleonchange = (e) => {
 
-        //console.log("email = ", credential.email);
+        
         setcredential({ ...credential, [e.target.name]: e.target.value });
 
     }

@@ -6,40 +6,31 @@ const AddNote = () => {
 
     const context = useContext(noteContext)
     const { addNote} = context;
-    const alertcontext = useContext(alertContext);
-    const { handleAlert} = alertcontext;
+    
 
     const [note, setNotes] = useState({"title":"", "description":"", "tag":"default"});
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        console.log(note);
         if( !note.title || !note.description || !note.tag)
             {
-                //console.log("inside if ");
-                handleAlert("please enter Detail", "warning");
-            //    setTimeout(()=>{
-//               <Alert />
-
-            //    },1000)
                return;
             }
         addNote(note.title, note.description, note.tag);
-        handleAlert("Note added successfully", "success");
         setNotes({"title":"", "description":"", "tag":"default"});
        
          document.getElementById("myForm").reset();
     }
     const handleOnchange = (e) =>{
         // TODO
-        // console.log({...note})
+        
         setNotes({...note, [e.target.name]: e.target.value});   
 
     }
     return (
         <div>
-            <div className="container my-3">
-                <h2>Add a Note</h2>
+            <div className="container">
+                <h2 >Add a Note</h2>
                 <form className='my-3' id = "myForm">
                     <div className="form-group my-3">
                         <label htmlFor="exampleInputEmail1">Title</label>

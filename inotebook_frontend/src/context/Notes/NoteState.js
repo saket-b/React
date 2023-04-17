@@ -1,7 +1,10 @@
 import NoteContext from "./noteContext";
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import alertContext from "./alertContext";
 const NoteState = (props) => {
+
+    const alertcontext = useContext(alertContext);
+    const { handleAlert} = alertcontext;
 
     const host = "http://localhost:5000";
 
@@ -15,18 +18,17 @@ const NoteState = (props) => {
 
         // Example POST method implementation:
 
-       
+           
             const response = await fetch( `${host}/api/notes/getAllNotes`, {
                 method: "GET", // *GET, POST, PUT, DELETE, etc.
                 headers: {
                     "Content-Type": "application/json",
-                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
+                    "token": localStorage.getItem('token'),
                 },
                 // body: JSON.stringify(), // body data type must match "Content-Type" header
             });
             let json = await response.json(); // parses JSON response into native JavaScript objects
-            //console.log("message = ", json.message);
-            setNotes(json.message);
+            setNotes(json.allnotes);
 
     }
 
@@ -39,17 +41,17 @@ const NoteState = (props) => {
             method: "POST", // *GET, POST, PUT, DELETE, etc.
             headers: {
                 "Content-Type": "application/json",
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
+                "token": localStorage.getItem('token'),
             },
             body: JSON.stringify({title, description, tag}), // body data type must match "Content-Type" header
         });
       
-        console.log("=============");
+        
         let note = await response.json();
-        console.log("inside note add ", note);
        
-         setNotes(notes.concat(note.success));
-         console.log( "Notes = ", notes);
+         setNotes(notes.concat(note.addnote));
+         handleAlert("Note added successfully", "success");
+        
     }
 
     // delete Note function
@@ -60,15 +62,16 @@ const NoteState = (props) => {
             // credentials: "same-origin", // include, *same-origin, omit
             headers: {
               "Content-Type": "application/json",
-              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
+              "token": localStorage.getItem('token'),
               // 'Content-Type': 'application/x-www-form-urlencoded',
             }
             
           });
          // const json = await response.json();
-        //   console.log(json);
         //todo API CALL KARNA baki hai
         setNotes(notes.filter((element) => { return element._id !== id }));
+        handleAlert("Note deleted successfully", "danger");
+
     }
 
     // edit Note function
@@ -77,21 +80,20 @@ const NoteState = (props) => {
 
 
         // API UPDAT?E karna baki hai
-        console.log(id);
+       
         const response = await fetch(`${host}/api/notes/updateNote/${id}`, {
             method: "PATCH", // *GET, POST, PUT, DELETE, etc.
             // credentials: "same-origin", // include, *same-origin, omit
             headers: {
               "Content-Type": "application/json",
-              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
-
-            //   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjAxNzQ5NzUzM2FmNTVhYTk1OTJkNyIsImlhdCI6MTY3OTkzODkzNH0.YNjZ30yaz8cOzf6zUJEf5QSp2OVQptWl7gCBiSX8XyU",
               // 'Content-Type': 'application/x-www-form-urlencoded',
+              "token": localStorage.getItem('token'),
+
             //   "mode": 'no-cors',  
             },
             body: JSON.stringify({title,description, tag}), // body data type must match "Content-Type" header
           });
-        //   console.log(await response.json());
+        
           let newnotes = JSON.parse(JSON.stringify(notes));
           
         for (let index = 0; index < newnotes.length; index++) {
@@ -104,8 +106,9 @@ const NoteState = (props) => {
             }
         }
 
-        console.log("new notes =", newnotes);
         setNotes(newnotes);
+        handleAlert("Note Updated successfully", "success");
+
     }
 
     return (

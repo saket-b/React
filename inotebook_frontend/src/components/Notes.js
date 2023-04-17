@@ -3,10 +3,11 @@ import NoteItems from './NoteItems'
 import noteContext from '../context/Notes/noteContext'
 import AddNote from './AddNote'
 import { Modal, Button } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 const Notes = () => {
 
 
-
+  const navigate = useNavigate();
 
   // let inputref = useRef(null);
   const context = useContext(noteContext)
@@ -15,12 +16,17 @@ const Notes = () => {
   const [note, setNotes] = useState({ "title": "", "description": "", "tag": "" });
 
   useEffect(() => {
-    // console.log("inside in useEffect");
-    getAllNotes();
+   
+    if(localStorage.getItem('token'))
+        getAllNotes();
+    else 
+       {
+        navigate('/login');
+       }
     // eslint-disable-next-line
   }, []);
 
-  console.log("notes =", notes);
+ 
 
   const UpdateNote = (currentnote) => {
     setShow(true);
@@ -28,9 +34,8 @@ const Notes = () => {
   }
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log(note);
     editNote(note._id, note.title, note.description, note.tag);
-
+    
     document.getElementById("myForm").reset();
     handleClose();
   }
@@ -92,7 +97,7 @@ const Notes = () => {
       <div className='row my-3'>
         <h2>Your Notes</h2>
           <div className="container mx-3">
-            {notes.length === 0 && 'No Notes available'}
+            {!notes.length && 'No Notes available'}
           </div>
           {notes.map((note, id) => {
             return <NoteItems key={id} note={note} UpdateNote={UpdateNote} />
