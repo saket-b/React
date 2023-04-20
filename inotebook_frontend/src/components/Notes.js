@@ -53,6 +53,7 @@ const Notes = () => {
 
   return (
     <>
+   
       <AddNote />
 
       <Button variant="primary d-none" onClick={handleShow}>
@@ -63,7 +64,6 @@ const Notes = () => {
         <Modal.Header closeButton>
           <Modal.Title>Edit Note</Modal.Title>
         </Modal.Header>
-
 
 
 
@@ -81,9 +81,8 @@ const Notes = () => {
             <label htmlFor="exampleInputPassword1">Tag</label>
             <input type="text" className="form-control" id="tag" name="tag" placeholder="tag" value={note.tag} onChange={handleOnchange} />
           </div>
-
-
         </form>
+       
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
@@ -105,6 +104,7 @@ const Notes = () => {
           }
 
         </div>
+     
       </>
       )
 }

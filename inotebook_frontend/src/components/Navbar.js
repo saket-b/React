@@ -20,6 +20,7 @@ const Navbar = () => {
        
 
         localStorage.removeItem('token');
+        localStorage.removeItem("username")
         navigate('/login');
         handleAlert("Logout successfully", "success");
 
@@ -47,7 +48,10 @@ const Navbar = () => {
                     { !localStorage.getItem('token')?<form className='d-flex'>
                         <Link className="btn btn-primary mx-1" role="button" to="/signup"> Signup</Link>
                         <Link className="btn btn-primary mx-1" role="button" to="/login"> login</Link>
-                    </form>:(<button className='btn btn-primary mx-1' onClick={handleLogout}> Logout</button>)
+                    </form>:(<div className='d-flex'>
+                        <h5 style={{color: "white"}} className= "my-2 mx-3" > {localStorage.getItem("username")}</h5>
+                        <button className='btn btn-primary mx-1' onClick={handleLogout}> Logout</button>
+                        </div>)
                     }
 
 

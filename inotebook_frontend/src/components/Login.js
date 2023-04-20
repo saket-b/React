@@ -24,9 +24,11 @@ const Login = () => {
         });
 
         let json = await response.json();
+        console.log("json = ", json);
         if(json.success)
         {
             localStorage.setItem('token',json.token);
+            localStorage.setItem('username', json.username);
             navigate('/');
             handleAlert("login successfully", "success");
         }
@@ -48,7 +50,7 @@ const Login = () => {
     
 
     return (
-        <div>
+        <div className='container my-3'>
             <h2 className='my-3'>Login to use iNoteBook</h2>
             <form onSubmit={handleLogin}>
                 <div className="my-3">

@@ -25,6 +25,7 @@ const Signup = () => {
         
         if (json.success) {
             localStorage.setItem("token", json.token);
+            localStorage.setItem("username", json.username);
             handleAlert("signup successfully", "success");
             navigate('/');
 
@@ -43,7 +44,7 @@ const Signup = () => {
     }
 
     return (
-        <div>
+        <div className='my-3'>
             <form onSubmit={handleSignup} >
                 <div className="mb-3">
                     <label forhtml="name" className="form-label">Name</label>

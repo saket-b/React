@@ -29,7 +29,7 @@ const AddNote = () => {
     }
     return (
         <div>
-            <div className="container">
+            <div className=" my-3">
                 <h2 >Add a Note</h2>
                 <form className='my-3' id = "myForm">
                     <div className="form-group my-3">
