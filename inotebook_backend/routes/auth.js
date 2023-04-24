@@ -53,7 +53,7 @@ authRouter.post('/createUser', [
 
     let jwtToken = jwt.sign(data, JWT_SECRET);
 
-    res.json({"success":success, "token": jwtToken});
+    res.json({"success":success, "token": jwtToken, "username": user.name});
   }
   catch (err) {
     // for catch error
@@ -94,7 +94,7 @@ authRouter.post('/login', [
             id:user.id
           }
           let jwtToken = jwt.sign(data, JWT_SECRET);
-          res.json({"success": success,"token": jwtToken});
+          res.json({"success": success,"token": jwtToken,"username": user.name});
         }
         else 
         {
